@@ -54,7 +54,7 @@ module.exports = function(jinxFile){
 	fileContent = replaceModules(fileContent,modules);
 
 	var compilerHeader = String(fs.readFileSync('template/_compilerHeader.js'));
-	var modulesFiles = jinxLoader(modules,jinxFile.path).jinx;
+	var modulesFiles = jinxLoader(modules,'./').jinx;
 	var modulesContents = [];
 
 	for(i in modulesFiles) modulesContents[i] = warpModule(fs.readFileSync(modulesFiles[i]));
