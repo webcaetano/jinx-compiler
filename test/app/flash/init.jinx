@@ -1,0 +1,2 @@
+var memPanel  = require (	"jinx-mempanel" );
+memPanel();
