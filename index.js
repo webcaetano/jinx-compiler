@@ -39,7 +39,7 @@ module.exports = function(jinxFile){
 	var fileName = getFileName(jinxFile.path);
 	var i;
 
-	var asHeader = _.template(String(fs.readFileSync('template/_asHeader.js')))({fileName:fileName});
+	var asHeader = _.template(String(fs.readFileSync(path.resolve(__dirname,'template/_asHeader.js'))))({fileName:fileName});
 
 	var modules = [];
 
@@ -53,7 +53,8 @@ module.exports = function(jinxFile){
 
 	fileContent = replaceModules(fileContent,modules);
 
-	var compilerHeader = String(fs.readFileSync('template/_compilerHeader.js'));
+
+	var compilerHeader = String(fs.readFileSync(path.resolve(__dirname,'template/_compilerHeader.js')));
 	var modulesFiles = jinxLoader(modules,'./').jinx;
 	var modulesContents = [];
 
