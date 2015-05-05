@@ -43,7 +43,7 @@ module.exports = function(jinxFile){
 
 	var modules = [];
 
-	modules = modules.concat(fileContent.match(getCard('a-zA-Z_\\-\\.')));
+	modules = _.compact(modules.concat(fileContent.match(getCard('a-zA-Z_\\-\\.'))));
 
 	for(i in modules){
 		modules[i] = modules[i].match(/['"][a-zA-Z_\-\.]+['"]/g)[0];
