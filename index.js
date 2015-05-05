@@ -3,28 +3,6 @@ var fs = require('fs');
 var _ = require('lodash');
 var jinxLoader = require('jinx-loader');
 
-
-// var loadModules = function(modules){
-// 	var allFiles = [];
-// 	var root = path.resolve('node_modules');
-// 	var filesContent = [];
-// 	var i;
-
-// 	for(i in modules){
-// 		var pkgFile = JSON.parse(fs.readFileSync(path.join(root, modules[i], 'package.json')));
-// 		var jinxPkgFiles = getJinxPkgFiles(pkgFile);
-// 		if(jinxPkgFiles.length) allFiles = allFiles.concat(addPkgPath(jinxPkgFiles,path.join(root, modules[i])));
-// 	}
-
-// 	for(i in allFiles){
-// 		if(path.extname(allFiles[i])=='.as' || path.extname(allFiles[i])=='.jinx'){
-// 			filesContent.push(warpModule(String(fs.readFileSync(allFiles[i]))));
-// 		}
-// 	}
-
-// 	return filesContent;
-// }
-
 var warp = function(pre,content,suf,separator){
 	return [pre,content,suf || pre].join((separator ? separator : ','));
 }
@@ -79,7 +57,7 @@ module.exports = function(jinxFile){
 	var modulesFiles = jinxLoader(modules,jinxFile.path).jinx;
 	var modulesContents = [];
 
-	for(i in modulesFiles) modulesContents[i] = fs.readFileSync(modulesFiles[i]);
+	for(i in modulesFiles) modulesContents[i] = warpModule(fs.readFileSync(modulesFiles[i]));
 
 	modulesContents.unshift(warpModule(fileContent));
 
