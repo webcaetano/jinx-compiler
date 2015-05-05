@@ -11,7 +11,6 @@ var warpModule = function(content){
 	return warp('function(module, exports, __jinx_require__) {',content,'}','\n');
 }
 
-
 var escapeRegExp = function(str) { // credits CoolAJ86
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
@@ -53,14 +52,16 @@ module.exports = function(jinxFile){
 
 	fileContent = replaceModules(fileContent,modules);
 
-
 	var compilerHeader = String(fs.readFileSync(path.resolve(__dirname,'template/_compilerHeader.js')));
-	var modulesFiles = jinxLoader(modules,'./').jinx;
+	var modulesFiles = jinxLoader.main(modules,jinxFile.path);
 	var modulesContents = [];
 
 	for(i in modulesFiles) modulesContents[i] = warpModule(fs.readFileSync(modulesFiles[i]));
 
 	modulesContents.unshift(warpModule(fileContent));
 
-	return [asHeader,compilerHeader,'(['+modulesContents.join(',\n')+']);','}}}'].join('\n');
+	return {
+		contents:new Buffer([asHeader,compilerHeader,'(['+modulesContents.join(',\n')+']);','}}}'].join('\n')),
+		swc:jinxLoader.swc(modules)
+	}
 }
