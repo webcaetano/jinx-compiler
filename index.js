@@ -32,7 +32,7 @@ var getFileName = function($){
 }
 
 module.exports = function(jinxFile){
-	if(Buffer.isBuffer(jinxFile)){
+	if(Buffer.isBuffer(jinxFile) || jinxFile.contents){
 		var fileContent = String((!jinxFile.contents ? jinxFile : jinxFile.contents));
 	}
 
