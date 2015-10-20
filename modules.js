@@ -46,24 +46,23 @@ var getModulesFromFile = function(content,jinxFile,modules){
 	var i;
 	var filePath = jinxFile.path ? jinxFile.path : jinxFile;
 
-	modulesNames = _.compact(modulesNames.concat(listedModulesInFile(content)));
+	modulesNames = _.uniq(modulesNames.concat(listedModulesInFile(content)));
 
 	for(i in modulesNames){
 		modulesNames[i] = modulesNames[i].match(/['"][a-zA-Z_\-\.\/]+['"]/g)[0];
 		modulesNames[i] = modulesNames[i].substr(1,modulesNames[i].length-2);
 	}
 
-	modulesNames = _.uniq(modulesNames);
-
 	var modulesFiles = jinxLoader.main(modulesNames,filePath);
 	var modulesContents = [];
+	var selfModules = {};
 
 	if(!modules) modules = {};
 
 	for(i in modulesFiles) {
 		var tmpContent = warpModule(fs.readFileSync(modulesFiles[i]));
 		if(!modules[md5(tmpContent)]) {
-			modules[md5(tmpContent)] = {
+			selfModules[md5(tmpContent)] = modules[md5(tmpContent)] = {
 				content:tmpContent,
 				file:modulesFiles[i],
 				name:modulesNames[i],
@@ -73,25 +72,22 @@ var getModulesFromFile = function(content,jinxFile,modules){
 		}
 	}
 
-	var mainContent = replaceModules(content,modules);
-
 	if(!modules['main']) {
 		modules['main'] = {
-			content:warpModule(mainContent),
+			content:warpModule(content),
 			file:filePath,
 			name:'__main__',
 			id:0,
 		}
 	}
 
-	if(modules[md5(content)]){
-		modules[md5(content)].content = mainContent;
-	}
+	if(modules[md5(content)]) return;
 
-	for(i in modules){
-		var m = listedModulesInFile(modules[i].content);
+	for(i in selfModules){
+		if(!selfModules[i] || selfModules[i].name=='__main__') continue;
+		var m = _.uniq(listedModulesInFile(selfModules[i].content));
 		if(m && m.length) {
-			modules = getModulesFromFile(modules[i].content,modules[i].file,modules);
+			getModulesFromFile(selfModules[i].content,selfModules[i].file,modules);
 		}
 	}
 
@@ -113,6 +109,10 @@ module.exports = function(content,jinxFile){
 	})
 
 	modulesContents.unshift(modules.main.content);
+
+	_.each(modulesContents,function(content,k){
+		modulesContents[k] = replaceModules(content,modules)
+	});
 
 	return {
 		content:[modulesHeader,'(['+modulesContents.join(',\n')+']);'].join('\n'),

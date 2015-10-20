@@ -1,1 +1,3 @@
+var foo = require("./foo.jinx");
+
 module.exports = {};
