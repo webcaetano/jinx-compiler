@@ -42,7 +42,9 @@ var listedModulesInFile  = function(content){
 	return content.match(getCard('a-zA-Z_\\-\\.\\/'));
 }
 
-var treatModulesNames = function(modulesNames){
+var treatModulesNames = function(content){
+	var modulesNames = _.compact(_.uniq(listedModulesInFile(content)));
+	if(!modulesNames || !modulesNames.length) return [];
 	for(var i in modulesNames){
 		modulesNames[i] = modulesNames[i].match(/['"][a-zA-Z_\-\.\/]+['"]/g)[0];
 		modulesNames[i] = modulesNames[i].substr(1,modulesNames[i].length-2);
@@ -55,7 +57,8 @@ var getModulesFromFile = function(content,jinxFile,modules){
 	var i;
 	var filePath = jinxFile.path ? jinxFile.path : jinxFile;
 
-	modulesNames = treatModulesNames(_.uniq(modulesNames.concat(listedModulesInFile(content))));
+	// modulesNames = treatModulesNames(_.compact(_.uniq(modulesNames.concat(listedModulesInFile(content)))));
+	modulesNames = treatModulesNames(content);
 
 	var modulesFiles = _.compact(jinxLoader.main(modulesNames,filePath));
 	var modulesContents = [];
@@ -87,7 +90,8 @@ var getModulesFromFile = function(content,jinxFile,modules){
 
 	for(i in selfModules){
 		if(!selfModules[i] || selfModules[i].name=='__main__') continue;
-		var m = treatModulesNames(_.uniq(listedModulesInFile(selfModules[i].content)));
+		// var m = treatModulesNames(_.uniq(listedModulesInFile(selfModules[i].content)));
+		var m = treatModulesNames(selfModules[i].content);
 		if(m && m.length) {
 			getModulesFromFile(selfModules[i].content,selfModules[i].file,modules);
 		}

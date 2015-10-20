@@ -1,6 +1,6 @@
 {
   "name": "jinx-compiler",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Jinx compiler into .as (actionscript3)",
   "main": "index.js",
   "scripts": {
