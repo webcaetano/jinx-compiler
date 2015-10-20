@@ -1,0 +1,5 @@
+var bola = require("./bola");
+
+module.exports = function(){
+	return 3;
+}

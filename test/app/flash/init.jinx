@@ -1,2 +1,5 @@
 var memPanel  = require (	"jinx-mempanel" );
+
+var bola = require("./partials/bola");
+var foo = require("./partials/foo.jinx");
 memPanel();

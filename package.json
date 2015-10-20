@@ -1,48 +1,48 @@
 {
-  "name": "jinx-compiler",
-  "version": "1.2.1",
-  "description": "Jinx compiler into .as (actionscript3)",
-  "main": "index.js",
-  "scripts": {
-    "test": "mocha test.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/webcaetano/jinx-compiler"
-  },
-  "keywords": [
-    "jinx",
-    "jinx-compiler",
-    "as3",
-    "swf",
-    "swc",
-    "npm",
-    "package",
-    "flash",
-    "adobe"
-  ],
-  "author": {
-    "name": "Andre Caetano"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/webcaetano/jinx-compiler/issues"
-  },
-  "homepage": "https://github.com/webcaetano/jinx-compiler",
-  "dependencies": {
-    "jinx-loader": "^1.0.6",
-    "lodash": "^3.8.0"
-  },
-  "devDependencies": {
-    "chai": "^2.3.0",
-    "jinx-loader": "^1.1.0",
-    "jinx-mempanel": "^1.0.3",
-    "mocha": "^2.2.4"
-  },
-  "readme": "[![Build Status](https://travis-ci.org/webcaetano/jinx-compiler.svg?branch=master)](https://travis-ci.org/webcaetano/jinx-compiler) [![npm version](https://badge.fury.io/js/jinx-compiler.svg)](http://badge.fury.io/js/jinx-compiler)\n\n# [![Imgur](http://i.imgur.com/FHjshUv.png)](https://github.com/webcaetano/jinx)\n\nThis is an nodejs module for compile .jinx into .as (actionscript3)  \n\n### Usage\n```javascript\nvar jinxCompiler = require('jinx-compiler');\n\nvar jinxFile = 'test/app/flash/init.jinx';\nvar compiled = jinxCompiler(fs.readFileSync(jinxFile)); // return an actionscript\n```\n\n---------------------------------\n\nThe MIT [License](https://raw.githubusercontent.com/webcaetano/jinx-compiler/master/LICENSE.md)\n",
-  "readmeFilename": "README.md",
-  "gitHead": "4c6de4b96fea13cff75a7123a72e073fbe90922c",
-  "_id": "jinx-compiler@1.1.0",
-  "_shasum": "e161115a376d8440ceffbe4b7ff1e11e63efc9e9",
-  "_from": "jinx-compiler@*"
+	"name": "jinx-compiler",
+	"version": "2.0.0",
+	"description": "Jinx compiler into .as (actionscript3)",
+	"main": "index.js",
+	"scripts": {
+		"test": "mocha test.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/webcaetano/jinx-compiler"
+	},
+	"keywords": [
+		"jinx",
+		"jinx-compiler",
+		"as3",
+		"swf",
+		"swc",
+		"npm",
+		"package",
+		"flash",
+		"adobe"
+	],
+	"author": {
+		"name": "Andre Caetano"
+	},
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/webcaetano/jinx-compiler/issues"
+	},
+	"homepage": "https://github.com/webcaetano/jinx-compiler",
+	"dependencies": {
+		"jinx-loader": "^1.0.6",
+		"lodash": "^3.8.0"
+	},
+	"devDependencies": {
+		"chai": "^2.3.0",
+		"jinx-loader": "^1.1.0",
+		"jinx-mempanel": "^1.0.3",
+		"mocha": "^2.2.4"
+	},
+	"readme": "[![Build Status](https://travis-ci.org/webcaetano/jinx-compiler.svg?branch=master)](https://travis-ci.org/webcaetano/jinx-compiler) [![npm version](https://badge.fury.io/js/jinx-compiler.svg)](http://badge.fury.io/js/jinx-compiler)\n\n# [![Imgur](http://i.imgur.com/FHjshUv.png)](https://github.com/webcaetano/jinx)\n\nThis is an nodejs module for compile .jinx into .as (actionscript3)  \n\n### Usage\n```javascript\nvar jinxCompiler = require('jinx-compiler');\n\nvar jinxFile = 'test/app/flash/init.jinx';\nvar compiled = jinxCompiler(fs.readFileSync(jinxFile)); // return an actionscript\n```\n\n---------------------------------\n\nThe MIT [License](https://raw.githubusercontent.com/webcaetano/jinx-compiler/master/LICENSE.md)\n",
+	"readmeFilename": "README.md",
+	"gitHead": "4c6de4b96fea13cff75a7123a72e073fbe90922c",
+	"_id": "jinx-compiler@1.1.0",
+	"_shasum": "e161115a376d8440ceffbe4b7ff1e11e63efc9e9",
+	"_from": "jinx-compiler@*"
 }
