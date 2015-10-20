@@ -1,6 +1,6 @@
 {
   "name": "jinx-compiler",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Jinx compiler into .as (actionscript3)",
   "main": "index.js",
   "scripts": {
@@ -30,8 +30,9 @@
   },
   "homepage": "https://github.com/webcaetano/jinx-compiler",
   "dependencies": {
-    "jinx-loader": "^1.0.6",
-    "lodash": "^3.8.0"
+    "jinx-loader": "^1.2.0",
+    "lodash": "^3.8.0",
+    "strip-comments": "^0.3.2"
   },
   "devDependencies": {
     "chai": "^2.3.0",

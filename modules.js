@@ -3,6 +3,7 @@ var _ = require('lodash');
 var path = require('path');
 var crypto = require('crypto');
 var jinxLoader = require('jinx-loader');
+var strip = require('strip-comments');
 
 var self = {};
 
@@ -41,19 +42,22 @@ var listedModulesInFile  = function(content){
 	return content.match(getCard('a-zA-Z_\\-\\.\\/'));
 }
 
+var treatModulesNames = function(modulesNames){
+	for(var i in modulesNames){
+		modulesNames[i] = modulesNames[i].match(/['"][a-zA-Z_\-\.\/]+['"]/g)[0];
+		modulesNames[i] = modulesNames[i].substr(1,modulesNames[i].length-2);
+	}
+	return modulesNames;
+}
+
 var getModulesFromFile = function(content,jinxFile,modules){
 	var modulesNames = [];
 	var i;
 	var filePath = jinxFile.path ? jinxFile.path : jinxFile;
 
-	modulesNames = _.uniq(modulesNames.concat(listedModulesInFile(content)));
+	modulesNames = treatModulesNames(_.uniq(modulesNames.concat(listedModulesInFile(content))));
 
-	for(i in modulesNames){
-		modulesNames[i] = modulesNames[i].match(/['"][a-zA-Z_\-\.\/]+['"]/g)[0];
-		modulesNames[i] = modulesNames[i].substr(1,modulesNames[i].length-2);
-	}
-
-	var modulesFiles = jinxLoader.main(modulesNames,filePath);
+	var modulesFiles = _.compact(jinxLoader.main(modulesNames,filePath));
 	var modulesContents = [];
 	var selfModules = {};
 
@@ -81,11 +85,9 @@ var getModulesFromFile = function(content,jinxFile,modules){
 		}
 	}
 
-	if(modules[md5(content)]) return;
-
 	for(i in selfModules){
 		if(!selfModules[i] || selfModules[i].name=='__main__') continue;
-		var m = _.uniq(listedModulesInFile(selfModules[i].content));
+		var m = treatModulesNames(_.uniq(listedModulesInFile(selfModules[i].content)));
 		if(m && m.length) {
 			getModulesFromFile(selfModules[i].content,selfModules[i].file,modules);
 		}
@@ -115,7 +117,7 @@ module.exports = function(content,jinxFile){
 	});
 
 	return {
-		content:[modulesHeader,'(['+modulesContents.join(',\n')+']);'].join('\n'),
+		content:[modulesHeader,'(['+strip(modulesContents.join(',\n'))+']);'].join('\n'),
 		modules:modulesNames
 	}
 }

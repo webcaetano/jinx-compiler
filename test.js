@@ -11,7 +11,7 @@ describe('jinx-compiler', function() {
     file.path = mainFile;
 		var compiled = jinxCompiler(file);
 		var contents = String(compiled.contents);
-    // console.log(contents);
+    	console.log(contents);
 
 		expect(contents).to.contain('__jinx_require__(1)');
 		expect(contents).to.not.contain('require (	"jinx-mempanel" )');
